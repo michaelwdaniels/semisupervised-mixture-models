@@ -8,13 +8,14 @@
 # marginal model fit report in results/tables directory.
 # ---------------------------------------------------------------------------- #
 
-cat("SCRIPT 0: Download yeast data, annotate features and fit marginals\n")
+cat("SCRIPT 0: Download S. cerevisiae data, annotate features and fit marginals\n")
 
 # Get constants and helper functions
 source("R/includes.R")
 
+# --------------------------- GET CEREVISIAE DATA ---------------------------- #
 # Download the Seringhaus 2006 data into the data/seringhaus/ directory
-cat("\tDownloading Seringhaus data\n")
+cat("\tDownloading Seringhaus S. cerevisiae data\n")
 seringhaus.arff = "data/seringhaus/cerevisiae_ALL_noNaN.arff"
 seringhaus.csv = "data/seringhaus/cerevisiae_ALL_noNaN.csv"
   
@@ -33,7 +34,7 @@ if (!file.exists(seringhaus.csv)){
 # gene IDs. Note that if for some reason we did choose to use the numerical data 
 # from the .arff file, read.arff() doesn't have an "as.is" option, so we'd need 
 # to convert factors to the corresponsing numeric values
-cat("\tFormatting Seringhaus data\n")
+cat("\tFormatting S. cerevisiae data\n")
 arffData = read.arff(seringhaus.arff)
 featureNames = names(arffData)
 featureNames = tolower(gsub("-", "_", featureNames))
@@ -43,7 +44,7 @@ features = read.table(seringhaus.csv, sep=",", as.is = TRUE)
 names(features) = c("id", featureNames)
 
 # Save formatted feature table
-write.table(features, "data/seringhaus/cleaned_Seringhaus_features.txt",
+write.table(features, "data/seringhaus/cleaned_cerevisiae_features.txt",
             sep = "\t", row.names = FALSE, quote = FALSE)
 
 # Extract gene IDs and essential gene identification
@@ -54,8 +55,7 @@ features$sgd_ess = NULL
 
 # Remove non-sequence-dervived features, annotate, and adjust data that might 
 # cause problems with log or logit transformation
-features = features[,SEQUENCE_DERIVED_FEATURES]
-features = mlapply(SEQUENCE_DERIVED_FEATURES, function(sdf)
+features = mlapply(ALL_FEATURES, function(sdf)
 {
   res = features[[sdf]]
   
@@ -76,10 +76,11 @@ features = mlapply(SEQUENCE_DERIVED_FEATURES, function(sdf)
   
   return(res)
 })
+names(features) = ALL_FEATURES
 
-
+# --------------------------- FIT MARGINAL MODELS ---------------------------- #
 # Marginal model fitting
-cat("\tFitting marginal models\n\n")
+cat("\tFitting marginal models\n")
 decincfit <- function(x, K, ...){
   # function to determine decreasing vs. increasing by essential genes
   fits = list(mixmod(x, K, decreasing = TRUE, ...),
@@ -136,14 +137,43 @@ names(attnames) = attnames
 msrept = as.data.frame(lapply(attnames, function(an)
   sapply(features, function(x) attr(x, an))),
   stringsAsFactors = F)
-print(msrept)
+#print(msrept)
 msrept$feature = row.names(msrept)
 
 # Save report on marginal models
 write.table(msrept[,c(ncol(msrept), 1:(ncol(msrept)-1))], 
-            "results/tables/yeast_marginal_model_performance.txt",
+            "results/tables/cerevisiae_marginal_model_performance.txt",
             sep = '\t', row.names = F, quote = F)
 
-cat("\n\tMarginal model fitting complete\n")
-cat("\tMarginal model stats saved in the 'results/tables/' directory")
+cat("\tMarginal model stats saved in the 'results/tables/' directory\n")
 
+# ------------------------- GET ESSENTIALITY DATA ---------------------------- #
+# Read Saccharomyces Genome Database data for gene names and year discovered
+sgd.ess = read.table("data/SGD/yeast_cerevisiae_essential_genes.tsv",
+                     as.is=T, header=F, sep="\t")
+sgd.ess = subset(sgd.ess, V2=="ORF") # open reading frames only
+refs = sgd.ess$V5
+pmid = as.integer(str_extract(refs, "[0-9]+"))
+sgdref = str_extract(refs, "S[0-9]+")
+
+# Keep only the desired columns
+sgd.ess = sgd.ess[,c(1, 3, 9, 6)]
+names(sgd.ess) = c("ensembl", "gene", "strain", "evidence")
+sgd.ess$pmid = pmid
+sgd.ess$sgdref = sgdref
+
+# Get publications
+sgd.pub = read.csv("Data/SGD/yeast_genome_database_publications.csv",
+                   as.is=T, header=T)
+names(sgd.pub) = c("author1", "pmid", "sgdref", "year")
+
+# Merge essentiality and publication data, individual tables for two strains
+sgd.big = subset(merge(sgd.ess, sgd.pub, all.x=TRUE), !is.na(year))
+sgd288 = subset(sgd.big, strain=="S288C")
+sgd1278 = subset(sgd.big, strain=="Sigma1278b")
+
+# Save relevant info for analysis
+preproc = list(features=features, essential=isEssential, summary=msrept,
+               ensembl=geneId, sgd.big=sgd.big, sgd288=sgd288, sgd1278=sgd1278)
+save(preproc, file="data/Rdata/cerevisiae_preprocessed.RData")
+cat("\tPreprocessed S. cerevisiae features saved in the 'data/Rdata/ directory\n")
