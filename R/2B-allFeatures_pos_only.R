@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------- #
 # Script 2B
-# Authors: Rani Powers and Daniel Dvorkin
+# Author: Rani Powers
 #
 # Uses all features from only positive training
 # examples to classify positive and negative test examples

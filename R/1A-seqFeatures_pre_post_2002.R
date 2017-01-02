@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------- #
 # Script 1A
-# Authors: Rani Powers and Daniel Dvorkin
+# Author: Rani Powers
 #
 # Uses the 14 Seringhaus sequence-derived features from the pre-2002 essential 
 # genes to predict which post-2002 genes are essential.

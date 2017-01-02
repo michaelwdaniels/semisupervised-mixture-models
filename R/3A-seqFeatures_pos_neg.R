@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------- #
 # Script 3A
-# Authors: Rani Powers and Daniel Dvorkin
+# Author: Rani Powers
 #
 # Uses the 14 Seringhaus sequence-derived features from pos & neg training
 # examples to classify positive and negative test examples

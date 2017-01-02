@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------- #
 # Script 3B
-# Authors: Rani Powers and Daniel Dvorkin
+# Author: Rani Powers
 #
 # Uses all features from pos & neg training
 # examples to classify positive and negative test examples

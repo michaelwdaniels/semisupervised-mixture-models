@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------- #
 # Script 1B
-# Authors: Rani Powers and Daniel Dvorkin
+# Author: Rani Powers
 #
 # Uses all features from the pre-2002 essential 
 # genes to predict which post-2002 genes are essential.
