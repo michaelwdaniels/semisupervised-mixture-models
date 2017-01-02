@@ -1,6 +1,5 @@
 # Semisupervised mixture models
-### Rani Powers
-Semi-supervised mixture models with the lcmix R package for integrative genomics analysis
+Semi-supervised mixture models with the `lcmix` R package for integrative genomics analysis
 
 ## Scripts 1A and 1B
 Semi-supervised and unsupervised mixture models on either sequence-derived features only (1A) or all features (1B). Train models on pre-2002 essential genes (+ training examples only, n = 64) and test on post-2002 essential and non-essential genes (+/- examples). Each script plots an ROC curve comparing the semi-supervised mixture model to the unsupervised mixture model.
