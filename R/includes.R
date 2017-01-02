@@ -1,15 +1,19 @@
 # --------------------------------- PACKAGES --------------------------------- #
 
+# All packages needed for the full analysis
 library(lcmix)
 library(foreign)     # for read.arff
 library(stringr)     
 library(parallel)    
-
+library(plyr)
+library(RWeka)
+library(ROCR)
+library(reshape2)
 
 # ------------------------------- "CONSTANTS" -------------------------------- #
 
 # Number of cores to be used in parallel processes
-NCORES <- max(1, detectCores()-2) 
+NCORES = max(1, detectCores()-2) 
 
 # S. cerevisiae features used in this project
 SEQUENCE_DERIVED_FEATURES = c("mitochondria", "cytoplasm", "er", "nucleus", 

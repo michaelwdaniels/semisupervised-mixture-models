@@ -8,18 +8,17 @@
 # marginal model fit report in results/tables directory.
 # ---------------------------------------------------------------------------- #
 
-cat("SCRIPT 0: Download S. cerevisiae data, annotate features and fit marginals\n")
-
 # Get constants and helper functions
 source("R/includes.R")
+cat("SCRIPT 0: Download S. cerevisiae data, annotate features and fit marginals\n")
 
 # --------------------------- GET CEREVISIAE DATA ---------------------------- #
 # Download the Seringhaus 2006 data into the data/seringhaus/ directory
-cat("\tDownloading Seringhaus S. cerevisiae data\n")
 seringhaus.arff = "data/seringhaus/cerevisiae_ALL_noNaN.arff"
 seringhaus.csv = "data/seringhaus/cerevisiae_ALL_noNaN.csv"
   
 if (!file.exists(seringhaus.arff)){
+  cat("\tDownloading Seringhaus S. cerevisiae data\n")
   download.file(url = "http://www.gersteinlab.org/proj/predess/data/Scerevisiae/Compiled/cerevisiae_ALL_noNaN.arff", 
                 destfile = seringhaus.arff, method = "curl")
 }
