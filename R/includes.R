@@ -9,6 +9,8 @@ library(plyr)
 library(RWeka)
 library(ROCR)
 library(reshape2)
+library(RColorBrewer)
+library(glmnet)
 
 # ------------------------------- "CONSTANTS" -------------------------------- #
 
