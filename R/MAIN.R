@@ -1,8 +1,18 @@
 # Run all analyses
+# Takes x minutes on Macbook Pro (2.3 GHz Intel Core i7, 8GB)
 
 source('R/1A-seqFeatures_pre_post_2002.R')
+rm(list = ls())
 source('R/1B-allFeatures_pre_post_2002.R')
+rm(list = ls())
 source('R/2A-seqFeatures_pos_only.R')
+rm(list = ls())
 source('R/2B-allFeatures_pos_only.R')
+rm(list = ls())
 source('R/3A-seqFeatures_pos_neg.R')
+rm(list = ls())
 source('R/3B-allFeatures_pos_neg.R')
+rm(list = ls())
+source('R/4A-seqFeatures_pos_neg_cv.R')
+rm(list = ls())
+source('R/4B-allFeatures_pos_neg_cv.R')
