@@ -6,11 +6,11 @@
 # genes to predict which post-2002 genes are essential.
 # ---------------------------------------------------------------------------- #
 
-cat('SCRIPT 1A: Train pre-2002 (+ only), test 2002+ (+/- genes), sequence-derived features\n')
-
 # Get constants and helper functions
 source('R/includes.R')
 source('R/analysis_helpers.R')
+
+cat('SCRIPT 1A: Train pre-2002 (+ only), test 2002+ (+/- genes), sequence-derived features\n')
 
 # Load preproc - preprocessed data from Script 0
 load('data/Rdata/cerevisiae_preprocessed.RData')
