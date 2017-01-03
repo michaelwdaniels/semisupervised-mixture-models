@@ -42,7 +42,7 @@ lcmix.preds = getLCMIXmodels(feature.table, is.train, labels[!is.train])
 
 mroc = multiroc(lcmix.preds$preds, labels[!divided.data$is.train], quasi=F)
 names(mroc) = c('Semisupervised' ,'Unsupervised')
-png('results/plots/ROC_seqFeatures_prepost2002.png',
+png('results/plots/1A-ROC_seqFeatures_prepost2002.png',
     height = 8, width = 8, res = 300, units = 'in')
 plot(mroc, grid=TRUE, col=c("red", "black"),
      cut=c(0.5, 0.8, 0.99), 
@@ -70,4 +70,3 @@ dev.off()
 #               kernel="radial")
 #svm.pred = predict(svm.model,divided.data$test)
 
-rm(list = ls())

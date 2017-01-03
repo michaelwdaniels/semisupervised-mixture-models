@@ -57,11 +57,9 @@ for (train.size in c(50, 30, 20, 10)){
 # Plot all lines together
 mroc = multiroc(all.preds, all.labels, quasi=F)
 cols = brewer.pal(11, 'Spectral')
-png('results/plots/ROC_allFeatures_pos_only.png',
+png('results/plots/2B-ROC_allFeatures_pos_only.png',
     height = 8, width = 8, res = 300, units = 'in')
 plot(mroc, grid=TRUE, col=rep(c('red', 'black'), 4),
      cut=c(0.5, 0.8, 0.99), 
      main = 'Train: essential genes (varying n)\nTest: essential and non-essential genes\nData: 22 Seringhaus features')
 dev.off()
-
-rm(list = ls())
