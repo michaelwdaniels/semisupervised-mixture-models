@@ -15,3 +15,6 @@ Loads required packages and some `lcmix` helper functions.
 
 ## analysis_helpers.R
 Includes wrapper functions for the modeling and plotting used in all the scripts above.
+
+## Scripts 6D
+Runs simulation for supervised comparisons (LASSO, SVM, RandomForest). Time warning: The program takes my MacBook Pro around 36 hours to run.
